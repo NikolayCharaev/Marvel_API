@@ -4,11 +4,9 @@ import mjolnir from '../../resources/img/mjolnir.png';
 import MarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
+
 class RandomChar extends Component {
-  constructor(props) {
-    super(props);
-    this.updateChar();
-  }
+
   state = {
     char: {},
     loading: true,
@@ -19,6 +17,10 @@ class RandomChar extends Component {
   onCharLoaded = (char) => {
     this.setState({ char, loading: false });
   };
+
+  componentDidMount() {
+        this.updateChar();
+  }
 
   onError = () => {
     this.setState({
@@ -69,7 +71,9 @@ const View = ({ char }) => {
   const { thumbnail, name, description, homepage, wiki } = char;
   return (
     <>
-      <img src={thumbnail} alt="Random character" className="randomchar__img" />
+    {
+        thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg' ?    <img src={thumbnail} alt="Random character" className="randomchar__img contain" /> : <img src={thumbnail} alt="Random character" className="randomchar__img" />
+    }
       <div className="randomchar__info">
         <p className="randomchar__name">{name}</p>
         <p className="randomchar__descr">{description}</p>
