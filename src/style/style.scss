@@ -91,3 +91,25 @@ main {
 .contain {
   object-fit: contain;
 }
+
+
+
+.test__box { 
+  width: 500px;
+  height: 500px;
+  background-color: blue;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
+  p{
+    width: 100px;
+    padding: 0;
+    margin: 0;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    right: 75%;
+    left: 50%;
+    color: #fff;
+  }
+}

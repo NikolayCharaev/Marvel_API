@@ -35,9 +35,9 @@ class CharList extends Component {
   };
 
   renderItems(arr) {
-    const items = arr.map((item,key) => {
+    const items = arr.map((item) => {
       return (
-        <li key={key} className="char__item">
+        <li key={item.id} className="char__item">
           {
             item.thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg' ? <img className='contain' src={item.thumbnail}  alt="" /> : <img src={item.thumbnail}  alt="" />
           }
@@ -50,9 +50,7 @@ class CharList extends Component {
 
   render() {
     const { charList, loading, error } = this.state;
-    
     const items = this.renderItems(charList);
-
     const errorMessage = error ? <ErrorMessage /> : null;
     const spinner = loading ? <Spinner /> : null;
     const content = !(loading || error) ? items : null;
