@@ -1,8 +1,9 @@
 import spinner from './spinner.gif';
+import './spinner.scss'
 
 const Spinner = () => {
   return (
-      <img className='randomchar__img center' src={spinner} alt="spinner" />
+      <img className='spinner char__info ' src={spinner} alt="spinner" />
 
   );
 };
