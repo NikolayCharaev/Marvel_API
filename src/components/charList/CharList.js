@@ -3,6 +3,9 @@ import { Component } from 'react';
 import MarvelService from '../../services/MarvelService';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import Spinner from '../spinner/Spinner';
+import PropTypes from 'prop-types'
+
+
 
 class CharList extends Component {
   state = {
@@ -10,8 +13,8 @@ class CharList extends Component {
     loading: true,
     error: false,
     newItemLoading: false,
-    offset: 210
-
+    offset: 210,
+    charEnded: false,
   };
 
   marvelSecrives = new MarvelService();
@@ -24,9 +27,7 @@ class CharList extends Component {
 
   onRequest = (offset) => {
     this.onCharListLoading();
-    this.marvelSecrives.getAllCharacter(offset)
-    .then(this.onCharListLoaded)
-    .catch(this.onError);
+    this.marvelSecrives.getAllCharacter(offset).then(this.onCharListLoaded).catch(this.onError);
   };
 
   componentDidMount() {
@@ -34,13 +35,18 @@ class CharList extends Component {
   }
 
   onCharListLoaded = (newCharList) => {
-    this.setState(({charList, offset}) => ({
-        charList : [...charList, ...newCharList],
-        loading: false,
-        newItemLoading: false,
-        offset : offset + 9
+    let ended = false;
+    if (newCharList.length < 9) {
+      ended = true;
+    }
+
+    this.setState(({ charList, offset }) => ({
+      charList: [...charList, ...newCharList],
+      loading: false,
+      newItemLoading: false,
+      offset: offset + 9,
+      charEnded: ended,
     }));
-    
   };
 
   onError = () => {
@@ -78,7 +84,7 @@ class CharList extends Component {
   }
 
   render() {
-    const { charList, loading, error, offset,newItemLoading} = this.state;
+    const { charList, loading, error, offset, newItemLoading, charEnded} = this.state;
     const items = this.renderItems(charList);
     const errorMessage = error ? <ErrorMessage /> : null;
     const spinner = loading ? <Spinner /> : null;
@@ -91,15 +97,22 @@ class CharList extends Component {
         {content}
         <button
           onClick={() => {
-            this.onRequest(offset)
-            console.log(offset)
+            this.onRequest(offset);
+            console.log(charEnded)
           }}
+          style={{'display' : charEnded ? 'none' : 'block'}}
           disabled={newItemLoading}
-          className="button button__main button__long">
+          className={"button button__main button__long"}>
           <div className="inner">load more</div>
-        </button>
+        </button>{' '}
       </div>
     );
   }
 }
+
+
+CharList.propTypes = { 
+  onCharSelected: PropTypes.func.isRequired
+}
+
 export default CharList;

@@ -2,14 +2,21 @@ import './charInfo.scss';
 import { Component } from 'react';
 import MarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
+import PropTypes from 'prop-types'
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import Skeleton from '../skeleton/Skeleton';
+
+
 class CharInfo extends Component {
   state = {
     char: null,
     loading: false,
     error: false,
+
+    
   };
+
+
 
   marvelSecrives = new MarvelService();
 
@@ -109,5 +116,10 @@ const View = ({ char }) => {
     </>
   );
 };
+
+
+CharInfo.propTypes = {
+  charId: PropTypes.number
+}
 
 export default CharInfo;
